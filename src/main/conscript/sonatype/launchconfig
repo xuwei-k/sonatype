@@ -1,0 +1,10 @@
+[app]
+  version: 0.1.0
+  org: com.github.xuwei-k
+  name: sonatype
+  class: sonatype.Sonatype
+[scala]
+  version: 2.12.2
+[repositories]
+  local
+  maven-central
