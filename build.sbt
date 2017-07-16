@@ -78,17 +78,17 @@ releaseProcess := Seq[ReleaseStep](
   checkSnapshotDependencies,
   inquireVersions,
   runClean,
-  releaseStepCommand("scalafmtTest"),
+  releaseStepCommandAndRemaining("scalafmtTest"),
   releaseStepTask(testConscript),
   runTest,
   setReleaseVersion,
   releaseStepTask(updateLaunchconfig),
   commitReleaseVersion,
   tagRelease,
-  releaseStepCommand("publishSigned"),
+  releaseStepCommandAndRemaining("publishSigned"),
   setNextVersion,
   commitNextVersion,
-  releaseStepCommand("sonatypeReleaseAll"),
+  releaseStepCommandAndRemaining("sonatypeReleaseAll"),
   pushChanges
 )
 
@@ -111,7 +111,7 @@ def updateLaunchconfigTask(commit: Boolean) = Def.task {
     |  maven-central
     |""".stripMargin
   IO.write(launchconfigFile, launchconfig)
-  if(commit) {
+  if (commit) {
     val git = new sbtrelease.Git((baseDirectory in LocalRootProject).value)
     val s = streams.value.log
     git.add(launchconfigFile.getCanonicalPath) ! s
