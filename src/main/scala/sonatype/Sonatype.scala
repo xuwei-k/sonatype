@@ -34,7 +34,12 @@ object Sonatype {
       IO.write(dir / "project/plugin.sbt", """addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "1.1")""")
       IO.write(dir / "build.sbt", s"""sonatypeProfileName := "${profileName}"""")
 
-      sys.process.Process("java" :: "-Xmx2G" :: "-jar" :: launcher.getCanonicalPath :: commands).!
+      sys.process
+        .Process(
+          command = "java" :: "-Xmx2G" :: "-jar" :: launcher.getCanonicalPath :: commands,
+          cwd = dir
+        )
+        .!
     }
   }
 }
