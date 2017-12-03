@@ -1,5 +1,12 @@
 name := "sonatype"
 
+publishTo := Some(
+  if (isSnapshot.value)
+    Opts.resolver.sonatypeSnapshots
+  else
+    Opts.resolver.sonatypeStaging
+)
+
 scalaVersion := "2.12.4"
 organization := "com.github.xuwei-k"
 licenses := Seq("MIT" -> url("https://opensource.org/licenses/mit-license"))
