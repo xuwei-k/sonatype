@@ -39,7 +39,7 @@ testConscript := Def
     updateLaunchconfigTask(false),
     csRun.toTask(" sonatype com.github.xuwei-k sonatypeList"),
     Def.task {
-      s"git checkout ${launchconfigFile}".!
+      sys.process.Process(s"git checkout ${launchconfigFile}").!
     }
   )
   .value
@@ -119,9 +119,9 @@ def updateLaunchconfigTask(commit: Boolean) = Def.task {
     |  maven-central
     |""".stripMargin
   IO.write(launchconfigFile, launchconfig)
+  val s = streams.value.log
   if (commit) {
     val git = new sbtrelease.Git((baseDirectory in LocalRootProject).value)
-    val s = streams.value.log
     git.add(launchconfigFile.getCanonicalPath) ! s
     git.commit(message = "update launchconfig", sign = false) ! s
   }

@@ -7,7 +7,6 @@ addSbtPlugin("com.github.gseitz" % "sbt-release" % "1.0.5")
 scalacOptions ++= Seq(
   "-deprecation",
   "-unchecked",
-  "-Xlint",
   "-Xfuture",
   "-language:existentials",
   "-language:higherKinds",
