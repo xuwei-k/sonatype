@@ -8,7 +8,7 @@ cache:
 script:
 - git config core.whitespace tab-in-indent,trailing-space,blank-at-eol
 - git show --oneline --check
-- sbt scalafmtTest test testConscript
+- sbt scalafmtSbtCheck scalafmtCheck test:scalafmtCheck test testConscript
 before_cache:
 - find $HOME/.sbt -name "*.lock" | xargs rm
 - find $HOME/.ivy2 -name "ivydata-*.properties" | xargs rm
