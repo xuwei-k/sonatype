@@ -20,7 +20,7 @@ object Sonatype {
   }
 
   def run0(profileName: String, commands: List[String]) = {
-    val sbtVersion = "0.13.16"
+    val sbtVersion = "0.13.17"
     val launcher = Path.userHome / ".sbt/launchers" / sbtVersion / "sbt-launch.jar"
     if (!launcher.isFile) {
       val launcherURL = url(
