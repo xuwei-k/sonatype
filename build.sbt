@@ -85,7 +85,7 @@ releaseProcess := Seq[ReleaseStep](
   checkSnapshotDependencies,
   inquireVersions,
   runClean,
-  releaseStepCommandAndRemaining("scalafmtTest"),
+  releaseStepCommandAndRemaining(";scalafmtCheck;test:scalafmtCheck;scalafmtSbtCheck"),
   releaseStepTask(testConscript),
   runTest,
   setReleaseVersion,
