@@ -10,33 +10,37 @@ object Sonatype {
   }
 
   def run(args: List[String]): Int = {
-    args match {
-      case Nil | (_ :: Nil) =>
-        Console.err.println("invalid arguments\nusage <profileName> <commands>")
+    SonatypeParser.parse(args, Config()) match {
+      case None =>
         -1
-      case profileName :: commands =>
-        run0(profileName, commands)
+      case Some(c) =>
+        run0(c)
     }
   }
 
-  def run0(profileName: String, commands: List[String]) = {
-    val sbtVersion = "0.13.17"
+  def run0(config: Config): Int = {
+    val sbtVersion = config.sbtVersion
     val launcher = Path.userHome / ".sbt/launchers" / sbtVersion / "sbt-launch.jar"
     if (!launcher.isFile) {
-      val launcherURL = url(
-        s"https://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/${sbtVersion}/sbt-launch.jar")
-      sbt.io.Using.urlInputStream(launcherURL) { inputStream =>
+      val launcherURL = if (sbtVersion.startsWith("0.13")) {
+        s"https://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/${sbtVersion}/sbt-launch.jar"
+      } else {
+        s"https://oss.sonatype.org/content/repositories/releases/org/scala-sbt/sbt-launch/${sbtVersion}/sbt-launch.jar"
+      }
+      sbt.io.Using.urlInputStream(url(launcherURL)) { inputStream =>
         IO.transfer(inputStream, launcher)
       }
     }
     IO.withTemporaryDirectory { dir =>
       IO.write(dir / "project/build.properties", s"sbt.version=${sbtVersion}")
-      IO.write(dir / "project/plugin.sbt", """addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "2.3")""")
-      IO.write(dir / "build.sbt", s"""sonatypeProfileName := "${profileName}"""")
+      IO.write(
+        dir / "project/plugin.sbt",
+        s"""addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "${config.sonatypeVersion}")""")
+      IO.write(dir / "build.sbt", s"""sonatypeProfileName := "${config.profileName}"""")
 
       sys.process
         .Process(
-          command = "java" :: "-Xmx2G" :: "-jar" :: launcher.getCanonicalPath :: commands,
+          command = "java" :: config.jvmArgs.toList ::: "-jar" :: launcher.getCanonicalPath :: config.commands.toList,
           cwd = dir
         )
         .!
