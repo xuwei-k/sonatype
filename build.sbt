@@ -72,8 +72,7 @@ scalacOptions ++= Seq(
   "-language:higherKinds",
   "-language:implicitConversions",
   "-Yno-adapted-args",
-  "-Ywarn-unused",
-  "-Ywarn-unused-import"
+  "-Ywarn-unused"
 )
 
 releaseTagName := tagName.value
