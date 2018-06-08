@@ -4,7 +4,7 @@
   name: sonatype
   class: sonatype.Sonatype
 [scala]
-  version: 2.12.4
+  version: 2.12.6
 [repositories]
   local
   sonatype-releases: https://oss.sonatype.org/content/repositories/releases
