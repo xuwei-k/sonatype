@@ -7,7 +7,7 @@ publishTo := Some(
     Opts.resolver.sonatypeStaging
 )
 
-scalaVersion := "2.12.7"
+scalaVersion := "2.12.8"
 organization := "com.github.xuwei-k"
 licenses := Seq("MIT" -> url("https://opensource.org/licenses/mit-license"))
 homepage := Some(url("https://github.com/xuwei-k/sonatype"))
