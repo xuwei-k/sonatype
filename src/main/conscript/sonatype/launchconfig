@@ -1,5 +1,5 @@
 [app]
-  version: 0.1.2
+  version: 0.1.3
   org: com.github.xuwei-k
   name: sonatype
   class: sonatype.Sonatype
