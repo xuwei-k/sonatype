@@ -20,18 +20,17 @@ object Sonatype {
   }
 
   def run0(profileName: String, commands: List[String]) = {
-    val sbtVersion = "0.13.18"
+    val sbtVersion = "1.2.8"
     val launcher = Path.userHome / ".sbt/launchers" / sbtVersion / "sbt-launch.jar"
     if (!launcher.isFile) {
-      val launcherURL = url(
-        s"https://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/${sbtVersion}/sbt-launch.jar")
+      val launcherURL = url(s"https://repo1.maven.org/maven2/org/scala-sbt/sbt-launch/${sbtVersion}/sbt-launch.jar")
       sbt.io.Using.urlInputStream(launcherURL) { inputStream =>
         IO.transfer(inputStream, launcher)
       }
     }
     IO.withTemporaryDirectory { dir =>
       IO.write(dir / "project/build.properties", s"sbt.version=${sbtVersion}")
-      IO.write(dir / "project/plugin.sbt", """addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "2.3")""")
+      IO.write(dir / "project/plugin.sbt", """addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "2.6")""")
       IO.write(dir / "build.sbt", s"""sonatypeProfileName := "${profileName}"""")
 
       sys.process
