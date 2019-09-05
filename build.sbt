@@ -37,7 +37,7 @@ val testConscript = TaskKey[Int]("testConscript")
 testConscript := Def
   .sequential(
     updateLaunchconfigTask(false),
-    csRun.toTask(" sonatype com.github.xuwei-k sonatypeList"),
+    csRun.toTask(" sonatype com.github.xuwei-k sonatypeRepository"),
     Def.task {
       sys.process.Process(s"git checkout ${launchconfigFile}").!
     }
