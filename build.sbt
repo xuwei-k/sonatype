@@ -1,5 +1,7 @@
 name := "sonatype"
 
+Global / onChangedBuildSource := ReloadOnSourceChanges
+
 publishTo := sonatypePublishToBundle.value
 
 scalaVersion := "2.12.8"
