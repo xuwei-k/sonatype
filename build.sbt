@@ -1,11 +1,6 @@
 name := "sonatype"
 
-publishTo := Some(
-  if (isSnapshot.value)
-    Opts.resolver.sonatypeSnapshots
-  else
-    Opts.resolver.sonatypeStaging
-)
+publishTo := sonatypePublishToBundle.value
 
 scalaVersion := "2.12.8"
 organization := "com.github.xuwei-k"
@@ -92,9 +87,9 @@ releaseProcess := Seq[ReleaseStep](
   commitReleaseVersion,
   tagRelease,
   releaseStepCommandAndRemaining("publishSigned"),
+  releaseStepCommandAndRemaining("sonatypeBundleRelease"),
   setNextVersion,
   commitNextVersion,
-  releaseStepCommandAndRemaining("sonatypeReleaseAll"),
   pushChanges
 )
 
