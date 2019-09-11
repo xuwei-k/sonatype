@@ -110,7 +110,6 @@ def updateLaunchconfigTask(commit: Boolean) = Def.task {
     |  version: ${scalaVersion.value}
     |[repositories]
     |  local
-    |  sonatype-releases: https://oss.sonatype.org/content/repositories/releases
     |  maven-central
     |""".stripMargin
   IO.write(launchconfigFile, launchconfig)
