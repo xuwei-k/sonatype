@@ -1,5 +1,10 @@
 name := "sonatype"
 
+enablePlugins(BuildInfoPlugin)
+buildInfoKeys := Seq[BuildInfoKey](sbtVersion)
+buildInfoPackage := "sonatype"
+buildInfoObject := "SonatypeBuildInfo"
+
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
 publishTo := sonatypePublishToBundle.value
