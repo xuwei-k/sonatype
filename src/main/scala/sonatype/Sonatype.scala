@@ -30,7 +30,7 @@ object Sonatype {
     }
     IO.withTemporaryDirectory { dir =>
       IO.write(dir / "project/build.properties", s"sbt.version=${sbtVersion}")
-      IO.write(dir / "project/plugin.sbt", """addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "3.7")""")
+      IO.write(dir / "project/plugin.sbt", """addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "3.8")""")
       IO.write(dir / "build.sbt", s"""sonatypeProfileName := "${profileName}"""")
 
       sys.process
