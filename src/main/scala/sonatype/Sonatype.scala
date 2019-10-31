@@ -5,7 +5,6 @@ import sbt.io.syntax._
 import sonatype.SonatypeBuildInfo.sbtVersion
 
 object Sonatype {
-
   def main(args: Array[String]): Unit = {
     run(args.toList)
   }
