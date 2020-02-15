@@ -23,9 +23,7 @@ object Sonatype {
     val launcher = Path.userHome / ".sbt/launchers" / sbtVersion / "sbt-launch.jar"
     if (!launcher.isFile) {
       val launcherURL = url(s"https://repo1.maven.org/maven2/org/scala-sbt/sbt-launch/${sbtVersion}/sbt-launch.jar")
-      sbt.io.Using.urlInputStream(launcherURL) { inputStream =>
-        IO.transfer(inputStream, launcher)
-      }
+      sbt.io.Using.urlInputStream(launcherURL) { inputStream => IO.transfer(inputStream, launcher) }
     }
     IO.withTemporaryDirectory { dir =>
       IO.write(dir / "project/build.properties", s"sbt.version=${sbtVersion}")
