@@ -4,7 +4,7 @@
   name: sonatype
   class: sonatype.Sonatype
 [scala]
-  version: 2.12.8
+  version: 2.12.11
 [repositories]
   local
   maven-central
