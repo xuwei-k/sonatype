@@ -26,8 +26,13 @@ object Sonatype {
       sbt.io.Using.urlInputStream(launcherURL) { inputStream => IO.transfer(inputStream, launcher) }
     }
     IO.withTemporaryDirectory { dir =>
+      val `sbt-sonatype-version` = sys.env.getOrElse("SBT_SONATYPE_VERSION", "3.9.2")
+      println(`sbt-sonatype-version`)
       IO.write(dir / "project/build.properties", s"sbt.version=${sbtVersion}")
-      IO.write(dir / "project/plugin.sbt", """addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "3.9.2")""")
+      IO.write(
+        dir / "project/plugin.sbt",
+        s"""addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "${`sbt-sonatype-version`}")"""
+      )
       IO.write(dir / "build.sbt", s"""sonatypeProfileName := "${profileName}"""")
 
       sys.process
