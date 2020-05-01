@@ -101,12 +101,13 @@ releaseProcess := Seq[ReleaseStep](
 
 updateLaunchconfig := updateLaunchconfigTask(true).value
 
-def updateLaunchconfigTask(commit: Boolean) = Def.task {
-  val mainClassName = (discoveredMainClasses in Compile).value match {
-    case Seq(m) => m
-    case zeroOrMulti => sys.error(s"could not found main class. $zeroOrMulti")
-  }
-  val launchconfig = s"""[app]
+def updateLaunchconfigTask(commit: Boolean) =
+  Def.task {
+    val mainClassName = (discoveredMainClasses in Compile).value match {
+      case Seq(m) => m
+      case zeroOrMulti => sys.error(s"could not found main class. $zeroOrMulti")
+    }
+    val launchconfig = s"""[app]
     |  version: ${version.value}
     |  org: ${organization.value}
     |  name: ${normalizedName.value}
@@ -117,12 +118,12 @@ def updateLaunchconfigTask(commit: Boolean) = Def.task {
     |  local
     |  maven-central
     |""".stripMargin
-  IO.write(launchconfigFile, launchconfig)
-  val s = streams.value.log
-  if (commit) {
-    val git = new sbtrelease.Git((baseDirectory in LocalRootProject).value)
-    git.add(launchconfigFile.getCanonicalPath) ! s
-    git.commit(message = "update launchconfig", sign = false, signOff = false) ! s
+    IO.write(launchconfigFile, launchconfig)
+    val s = streams.value.log
+    if (commit) {
+      val git = new sbtrelease.Git((baseDirectory in LocalRootProject).value)
+      git.add(launchconfigFile.getCanonicalPath) ! s
+      git.commit(message = "update launchconfig", sign = false, signOff = false) ! s
+    }
+    launchconfigFile
   }
-  launchconfigFile
-}
