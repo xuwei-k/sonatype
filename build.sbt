@@ -14,7 +14,7 @@ organization := "com.github.xuwei-k"
 licenses := Seq("MIT" -> url("https://opensource.org/licenses/mit-license"))
 homepage := Some(url("https://github.com/xuwei-k/sonatype"))
 
-libraryDependencies += "org.scala-sbt" %% "io" % "1.3.4"
+libraryDependencies += "org.scala-sbt" %% "io" % "1.4.0"
 
 pomExtra :=
   <scm>
