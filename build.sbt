@@ -9,7 +9,7 @@ Global / onChangedBuildSource := ReloadOnSourceChanges
 
 publishTo := sonatypePublishToBundle.value
 
-scalaVersion := "2.13.9"
+scalaVersion := "2.13.10"
 organization := "com.github.xuwei-k"
 licenses := Seq("MIT" -> url("https://opensource.org/licenses/mit-license"))
 homepage := Some(url("https://github.com/xuwei-k/sonatype"))
