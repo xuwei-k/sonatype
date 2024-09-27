@@ -26,7 +26,7 @@ object Sonatype {
       sbt.io.Using.urlInputStream(launcherURL) { inputStream => IO.transfer(inputStream, launcher) }
     }
     IO.withTemporaryDirectory { dir =>
-      val `sbt-sonatype-version` = sys.env.getOrElse("SBT_SONATYPE_VERSION", "3.9.21")
+      val `sbt-sonatype-version` = sys.env.getOrElse("SBT_SONATYPE_VERSION", "3.11.3")
       println(`sbt-sonatype-version`)
       IO.write(dir / "project/build.properties", s"sbt.version=${sbtVersion}")
       IO.write(
